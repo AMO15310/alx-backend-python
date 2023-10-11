@@ -1,21 +1,17 @@
 #!/usr/bin/env python3
-
-"""Wait for time n """
-
+'''Task 1's module.
+'''
 import asyncio
 from typing import List
+
+
 wait_random = __import__('0-basic_async_syntax').wait_random
 
-async def wait_n(n: int, max_delay: int) -> List:
-    """Spawns a coroutine n times.
 
-    Args:
-        n (int): Number of times to spawn wait_random.
-        max_delay (int): Specified delay.
-
-    Returns:
-        List: List of delays in ascending order.
-    """
-    tasks = [wait_random(max_delay) for i in range(n)]
-    delays = await asyncio.gather(*tasks)
-    return sorted(delays)
+async def wait_n(n: int, max_delay: int) -> List[float]:
+    '''Executes wait_random n times.
+    '''
+    wait_times = await asyncio.gather(
+        *tuple(map(lambda _: wait_random(max_delay), range(n)))
+    )
+    return sorted(wait_times)
